@@ -1,0 +1,49 @@
+module purge
+module load cloudy
+
+mkdir temp_var_lowdensity
+mkdir temp_var_highdensity
+mkdir dens_var
+
+cd temp_var_lowdensity
+
+for temp in 10000 20000 30000 40000 50000 60000 70000 80000 90000 100000
+do
+    echo "lowdensity ${temp}"
+    mkdir $temp
+    cd $temp
+    cp ../../hii_coolstar.in .
+    sed -i "s/replace-me-temp/${temp}/" hii_coolstar.in
+    sed -i "s/replace-me-dens/1/" hii_coolstar.in
+    cloudy.exe -r hii_coolstar
+    cd ..
+done
+
+cd ../temp_var_highdensity
+
+for temp in 10000 20000 30000 40000 50000 60000 70000 80000 90000 100000
+do
+    echo "highdensity ${temp}"
+    mkdir $temp
+    cd $temp
+    cp ../../hii_coolstar.in .
+    sed -i "s/replace-me-temp/${temp}/" hii_coolstar.in
+    sed -i "s/replace-me-dens/3/" hii_coolstar.in
+    cloudy.exe -r hii_coolstar
+    cd ..
+done
+
+cd ../dens_var
+
+for dens in {1..5}
+do
+    echo "density ${dens}"
+    mkdir $dens
+    cd $dens
+    cp ../../hii_coolstar.in .
+    sed -i "s/replace-me-temp/35000/" hii_coolstar.in
+    sed -i "s/replace-me-dens/${dens}/" hii_coolstar.in
+    cloudy.exe -r hii_coolstar
+    cd ..
+done
+
