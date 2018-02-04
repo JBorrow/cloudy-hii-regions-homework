@@ -50,7 +50,7 @@ def make_plot(ax, overview, density, temperature):
     ax.plot(overview["depth"], overview["hden"]*overview["HI"], label="H I")
     ax.plot(overview["depth"], overview["hden"]*overview["HII"], label="H II")
 
-    flux = sb_flux(T)
+    flux = 1e49
     stromgren = R_S(flux, density)
 
     formatted_R_S = format_number(stromgren)

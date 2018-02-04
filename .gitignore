@@ -1,3 +1,6 @@
 dens_var/*
 temp_var_lowdensity/*
 temp_var_highdensity/*
+
+*.pdf
+*__pycache__*
