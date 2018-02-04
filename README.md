@@ -21,3 +21,11 @@ COSMA, but should be easily changed to run anywhere.
 
 To produce the plots, please run the `python` scripts from the `analysis`
 directory. They assume that your ouputs are in the top-level directory.
+
+To make the text, you will need:
+
++ pandoc
++ pandoc-crossref
+
+These can be found through many package managers or built from source.
+
