@@ -4,6 +4,7 @@ module load cloudy
 mkdir temp_var_lowdensity
 mkdir temp_var_highdensity
 mkdir dens_var
+mkdir dens_var_only_hydrogen
 
 cd temp_var_lowdensity
 
@@ -44,6 +45,20 @@ do
     sed -i "s/replace-me-temp/35000/" hii_coolstar.in
     sed -i "s/replace-me-dens/${dens}/" hii_coolstar.in
     cloudy.exe -r hii_coolstar
+    cd ..
+done
+
+cd ../dens_var_only_hydrogen
+
+for dens in {1..5}
+do
+    echo "density only H ${dens}"
+    mkdir $dens
+    cd $dens
+    cp ../../hii_only_hydrogen.in .
+    sed -i "s/replace-me-temp/35000/" hii_only_hydrogen.in
+    sed -i "s/replace-me-dens/${dens}/" hii_only_hydrogen.in
+    cloudy.exe -r hii_only_hydrogen
     cd ..
 done
 
