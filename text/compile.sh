@@ -2,13 +2,10 @@ rm -rf compiled
 
 mkdir compiled
 
-pdflatex -output-directory="compiled" text.tex
+xelatex -output-directory="compiled" text.tex
 
-cd compiled
-bibtex text
+bibtex compiled/text
 
-cd ..
-
-pdflatex -output-directory="compiled" text.tex
-pdflatex -output-directory="compiled" text.tex
+xelatex -output-directory="compiled" text.tex
+xelatex -output-directory="compiled" text.tex
 
