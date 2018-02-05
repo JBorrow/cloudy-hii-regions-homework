@@ -1,0 +1,62 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath}
+
+
+\title{The Physics of HII Regions}\label{the-physics-of-hii-regions}
+\author{Josh Borrow}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+In this problem, we model the H\(\textsc{ii}\) region of an O star,
+within a cloud of Hydrogen and Helium. The setup used with CLOUDY for
+this particular implementation is available at the bottom of this
+report, but in short it contains a black body continuum that is shone
+through a spherical cloud with ISM abundances.
+
+Theoretically, one should be able to determine the edge radius of the
+H\(\textsc{ii}\) region by using the Stromgren Radius, \[ R_S = \left(
+\frac{3}{4\pi} \frac{S_*}{n^2 \alpha} \right)^{1/3} ~, \] where \(S_*\)
+is the flux of the central star in terms of photons per unit area per
+unit time, \(n\) is the number density of hydrogen in the
+H\(\textsc{ii}\) cloud, and \(\alpha \approx 3\times 10^{-13}\). We can
+place an `upper limit' on the number of photons that are able to ionise
+the hydrogen gas by using the Stefan-Boltzmann law,
+\[ S_{*, \mathrm{max}} = \frac{\sigma T^4}{E_{ion}}~, \] where
+\(E_{ion}\) is the ionisation energy of neutral hydrogen (13.6 eV).
+
+In fig.~\ref{fig:density} we show using CLOUDY how the radius of the
+H\(\textsc{ii}\) region scales with the density of the cloud.
+
+\begin{figure}
+\centering
+\includegraphics{../analysis/density.pdf}
+\caption{The hydrogen, H\(\textsc{i}\), and H\(\textsc{ii}\) densities
+are shown by the blue, orange, and green lines respectively. Note that
+the different panels correspond to varying initial hydrogen density. It
+is assumed that the cloud is equally dense throughout. The final panel
+shows how the radius of the edge of the H\(\textsc{ii}\) and
+He\(\textsc{ii}\) regions changes with cloud
+density.}\label{fig:density}
+\end{figure}
+
+To determine the edge of the H\(\textsc{ii}\) region, we use the
+derivative of the H\(\textsc{ii}\) abundance (see
+fig.~\ref{fig:derivative} for a plot that helps describe the method).
+
+\begin{figure}
+\centering
+\includegraphics{../analysis/differential.pdf}
+\caption{First derivatives of the H\(\textsc{ii}\) abundance with
+respect to depth into cloud. The different lines correspond to different
+black body temperatures for the central star, at a fixed density of
+\(n_H = 1\times 10^3\). It is clear from fig.~\ref{fig:density} that
+there is a turning point in the H\(\textsc{ii}\) abundance at what
+appears to be the `edge' of the cloud. By using the minima of this
+derivative we can find the edge programmatically.}\label{fig:derivative}
+\end{figure}
+
+\end{document}
