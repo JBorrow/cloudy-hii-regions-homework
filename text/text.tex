@@ -1,8 +1,17 @@
 \documentclass[a4paper]{article}
 \usepackage{amsmath}
 
+\usepackage{graphicx}
+\graphicspath{{../analysis/}{../../analysis/}{../static/}{../../static/}}
 
-\title{The Physics of HII Regions}\label{the-physics-of-hii-regions}
+\usepackage[round]{natbib}
+\bibliographystyle{unsrtnat}
+
+\usepackage{url}
+
+\newcommand{\hii}{H\textsc{ii}~}
+
+\title{The Physics of \hii Regions}\label{the-physics-of-hii-regions}
 \author{Josh Borrow}
 
 \begin{document}
@@ -11,52 +20,126 @@
 
 \section{Introduction}
 
-In this problem, we model the H\(\textsc{ii}\) region of an O star,
-within a cloud of Hydrogen and Helium. The setup used with CLOUDY for
-this particular implementation is available at the bottom of this
-report, but in short it contains a black body continuum that is shone
-through a spherical cloud with ISM abundances.
+In this problem, we model the \hii region of an O star, within a cloud of
+Hydrogen and Helium. It is worth starting with a brief description of what a
+\hii region is, where they are found, and how they play a role. In Figure
+\ref{fig:hiidiagram} we show a schematic of the ISM extracted from
+\citet{borrow_towards_2017}.
 
-Theoretically, one should be able to determine the edge radius of the
-H\(\textsc{ii}\) region by using the Stromgren Radius, \[ R_S = \left(
-\frac{3}{4\pi} \frac{S_*}{n^2 \alpha} \right)^{1/3} ~, \] where \(S_*\)
-is the flux of the central star in terms of photons per unit area per
-unit time, \(n\) is the number density of hydrogen in the
-H\(\textsc{ii}\) cloud, and \(\alpha \approx 3\times 10^{-13}\). We can
-place an `upper limit' on the number of photons that are able to ionise
-the hydrogen gas by using the Stefan-Boltzmann law,
-\[ S_{*, \mathrm{max}} = \frac{\sigma T^4}{E_{ion}}~, \] where
-\(E_{ion}\) is the ionisation energy of neutral hydrogen (13.6 eV).
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{structure.pdf}
+    \caption{The structure of the ISM. This is, in general, split up into four
+        distinct parts in accordance with the work by
+        \citet{mckee_theory_1977}.  The left image shows an isolated molecular
+        cloud. The \hii region would correspond to the `ionised` regions around
+        the central star forming `cold neutral' sphere. This is not the only
+        time in which a \hii region forms, but in general they are found around
+        collections of hot, young stars. On the right, a top-down image of the
+        `large-scale' ISM is shown (around 1 kpc scale). It can be seen that
+        multiple molecular clouds sit in the ISM, each surrounded by a large
+        \hii region. Note that the \hii regions can be `joined'.}
+    \label{fig:hiidiagram}
+\end{figure}
+
+\hii regions are associated with recent star formation
+\citep{anderson_molecular_2009}, as is made clear by the schematic in Figure
+\ref{fig:hiidiagram}.  They are formed primarily of ionised hydrogen, \hii, as
+their name suggests, but are of course full of other ionised species as well,
+such as He\textsc{ii}.  The temperature of these regions has been known to be
+approximately $10^4$ K for many decades \citep{peimbert_temperature_1967}.
+
+\section{Theoretical Study}
+
+One of the first papers published on the theory behind \hii regions is
+\citet{stromgren_physical_1939}. Due to their relative abundance in the solar
+neighborhood, \hii regions have been well studied; as far back as 
+\citep{struve_emission_1938} it has been theorised that they arise due to
+hot O and B stars that are present in regions of recent star formation.
+
+In \citet{stromgren_physical_1939} the author makes the following key
+assertions:
+\begin{itemize}
+    \item At the centre of the \hii region, there should be a collection of
+          stars that produce ionising radiation.
+    \item The photons from the star will ionise the gas around them. This
+          gas will eventually re-combine, but this will emit a photon that is
+          capable of ionising \emph{another} hydrogen atom (perhaps
+          behind the original atom), ensuring that the `ionisation front'
+          will always progress away from the star.
+    \item The sphere should be fully ionised due to the large amount of
+          ionising radiation produced by the star(s) and the aforementioned
+          `back-propagation' mechanism.
+\end{itemize}
+This leads naturally to the idea of a \citet{stromgren_physical_1939} sphere,
+an ionised \hii region around a source of ionising photons. The sphere has
+radius
+\begin{align}
+    R_S = \left(
+    \frac{3}{4\pi} \frac{S_*}{n^2 \alpha} \right)^{1/3},
+    \label{eqn:rs}
+\end{align}
+where $S_*$ is the luminosity of the central star in terms of photons per unit
+time, $n$ is the number density of hydrogen in the cloud, and $\alpha
+\approx 3\times 10^{-13}$ cm$^{4}$ s$^{-1}$ is the total recobination rate.
+
+This is underlied by the following assumptions:
+\begin{itemize}
+    \item The density of hydrogen in the sphere is constant throughout, and
+          the cloudy is composed solely of hydrogen.
+    \item The number density of electrons in the sphere is the same as
+          the number density of hydrogen nuclei.
+    \item The sphere is fully ionised, and the boundary between the ionised
+          region and the rest of the ISM is infinitely sharp.
+    \item The \hii region is at a constant temperature of $10^{4}$ K.
+\end{itemize}
+
+In the section below, we will use the numerical radiative transfer code
+CLOUDY \citep{ferland_2017_2017} to assess if this theory produces
+correct radii for \hii regions, and to interrogate the assumptions that the
+above model makes.
+
+\section{Numerical Study}
 
 In fig.~\ref{fig:density} we show using CLOUDY how the radius of the
-H\(\textsc{ii}\) region scales with the density of the cloud.
+H$\textsc{ii}$ region scales with the density of the cloud.
 
 \begin{figure}
 \centering
-\includegraphics{../analysis/density.pdf}
-\caption{The hydrogen, H\(\textsc{i}\), and H\(\textsc{ii}\) densities
+\includegraphics[width=\textwidth, trim=1cm 1cm 1cm 1cm]{density.pdf}
+\caption{The hydrogen, H$\textsc{i}$, and H$\textsc{ii}$ densities
 are shown by the blue, orange, and green lines respectively. Note that
 the different panels correspond to varying initial hydrogen density. It
 is assumed that the cloud is equally dense throughout. The final panel
-shows how the radius of the edge of the H\(\textsc{ii}\) and
-He\(\textsc{ii}\) regions changes with cloud
+shows how the radius of the edge of the H$\textsc{ii}$ and
+He$\textsc{ii}$ regions changes with cloud
 density.}\label{fig:density}
 \end{figure}
 
-To determine the edge of the H\(\textsc{ii}\) region, we use the
-derivative of the H\(\textsc{ii}\) abundance (see
+To determine the edge of the H$\textsc{ii}$ region, we use the
+derivative of the H$\textsc{ii}$ abundance (see
 fig.~\ref{fig:derivative} for a plot that helps describe the method).
 
 \begin{figure}
 \centering
-\includegraphics{../analysis/differential.pdf}
-\caption{First derivatives of the H\(\textsc{ii}\) abundance with
+\includegraphics[width=\textwidth, trim=0.5cm 0.5cm 0.5cm 0.5cm]{differential.pdf}
+\caption{First derivatives of the H$\textsc{ii}$ abundance with
 respect to depth into cloud. The different lines correspond to different
 black body temperatures for the central star, at a fixed density of
-\(n_H = 1\times 10^3\). It is clear from fig.~\ref{fig:density} that
-there is a turning point in the H\(\textsc{ii}\) abundance at what
+$n_H = 1\times 10^3$. It is clear from fig.~\ref{fig:density} that
+there is a turning point in the H$\textsc{ii}$ abundance at what
 appears to be the `edge' of the cloud. By using the minima of this
 derivative we can find the edge programmatically.}\label{fig:derivative}
 \end{figure}
+
+\section{Discussion}
+
+\section{Codes}
+
+You can find all of the codes, parameterfiles, and even the \LaTeX~ source
+for this report in the following GitHub repository,
+\url{https://github.com/JBorrow/cloudy-hii-regions-homework}.
+
+\bibliography{library}
 
 \end{document}
