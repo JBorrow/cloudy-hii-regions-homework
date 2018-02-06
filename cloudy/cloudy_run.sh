@@ -5,6 +5,7 @@ mkdir temp_var_lowdensity
 mkdir temp_var_highdensity
 mkdir dens_var
 mkdir dens_var_only_hydrogen
+mkdir qh_var
 
 cd temp_var_lowdensity
 
@@ -16,6 +17,7 @@ do
     cp ../../hii_coolstar.in .
     sed -i "s/replace-me-temp/${temp}/" hii_coolstar.in
     sed -i "s/replace-me-dens/1/" hii_coolstar.in
+    sed -i "s/replace-me-qh/49/" hii_coolstar.in
     cloudy.exe -r hii_coolstar
     cd ..
 done
@@ -30,6 +32,7 @@ do
     cp ../../hii_coolstar.in .
     sed -i "s/replace-me-temp/${temp}/" hii_coolstar.in
     sed -i "s/replace-me-dens/3/" hii_coolstar.in
+    sed -i "s/replace-me-qh/49/" hii_coolstar.in
     cloudy.exe -r hii_coolstar
     cd ..
 done
@@ -44,6 +47,22 @@ do
     cp ../../hii_coolstar.in .
     sed -i "s/replace-me-temp/35000/" hii_coolstar.in
     sed -i "s/replace-me-dens/${dens}/" hii_coolstar.in
+    sed -i "s/replace-me-qh/49/" hii_coolstar.in
+    cloudy.exe -r hii_coolstar
+    cd ..
+done
+
+cd ../qh_var
+
+for qh in {47..52}
+do
+    echo "qh ${qh}"
+    mkdir $qh
+    cd $qh
+    cp ../../hii_coolstar.in .
+    sed -i "s/replace-me-temp/35000/" hii_coolstar.in
+    sed -i "s/replace-me-dens/2/" hii_coolstar.in
+    sed -i "s/replace-me-qh/${qh}/" hii_coolstar.in
     cloudy.exe -r hii_coolstar
     cd ..
 done

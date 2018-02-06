@@ -1,1 +1,1 @@
-rm -rf dens_var temp_var_lowdensity temp_var_highdensity dens_var_only_hydrogen
+rm -rf dens_var temp_var_lowdensity temp_var_highdensity dens_var_only_hydrogen qh_var
