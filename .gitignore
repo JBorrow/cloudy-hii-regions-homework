@@ -1,6 +1,8 @@
 dens_var/*
 temp_var_lowdensity/*
 temp_var_highdensity/*
+qh_var/*
+dens_var_only_hydrogen/*
 
 analysis/*.pdf
 *__pycache__*
