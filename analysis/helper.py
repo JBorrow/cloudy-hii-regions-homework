@@ -75,6 +75,12 @@ def find_turning_point(ovw, region="HII"):
 
     grad = np.gradient(ovw[region])
     
-    return ovw["depth"][grad == np.amin(grad)]
+    minimum_depth = ovw["depth"][grad == np.amin(grad)]
+    
+    try:
+        return float(minimum_depth)
+    except:
+        return float(minimum_depth[0])
+
 
 
