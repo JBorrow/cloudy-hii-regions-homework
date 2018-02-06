@@ -10,6 +10,7 @@
 \usepackage{url}
 
 \newcommand{\hii}{H\textsc{ii}~}
+\newcommand{\cloudy}{{\tt CLOUDY}~}
 
 \title{The Physics of \hii Regions}\label{the-physics-of-hii-regions}
 \author{Josh Borrow}
@@ -95,14 +96,53 @@ This is underlied by the following assumptions:
 \end{itemize}
 
 In the section below, we will use the numerical radiative transfer code
-CLOUDY \citep{ferland_2017_2017} to assess if this theory produces
+\cloudy \citep{ferland_2017_2017} to assess if this theory produces
 correct radii for \hii regions, and to interrogate the assumptions that the
 above model makes.
 
 \section{Numerical Study}
 
-In fig.~\ref{fig:density} we show using CLOUDY how the radius of the
-H$\textsc{ii}$ region scales with the density of the cloud.
+The \hii regions are now studied using the numerical radiative transfer code
+\cloudy \citep{ferland_2017_2017}. In Table \ref{tab:sims} we list the
+runs that were performed and hence what areas of parameter space were explored.
+
+\begin{table}[!h]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{l|c|c|c|l}
+        Run Name & Temperature (K) & Density ($n_H$ cm$^{-1}$) & $S_*$ & Notes \\
+        \hline
+        {\tt dens\_var} & $35\times10^4$ & $10^1$ - $10^5$ & $10^{49}$ & ISM abundances\\
+        {\tt dens\_var\_only\_hydrogen} & $35\times10^4$ & $10^1$ - $10^5$ & $10^{49}$ & Abundances for all species: $10^{-18}$ \\
+        {\tt qh\_var} & $35\times10^4$ & $10^2$ & $10^{47}$ - $10^{52}$ & ISM abundances\\
+        {\tt temp\_var\_lowdensity} & $10$ - $100 \times 10^4$ & $10^1$ & $10^{49}$ & ISM abundances \\
+        {\tt temp\_var\_highdensity} & $10$ - $100 \times 10^4$ & $10^3$ & $10^{49}$ & ISM abundances\\
+    \end{tabular}}
+    \caption{The runs presented below. Note that $S_*$ refers to the number of
+        \emph{ionising} photons, i.e. this is {\tt q(h)} in the \cloudy code.}
+    \label{tab:sims}
+\end{table}
+To compare our numerical runs with the theoretical predictions for the
+\citet{stromgren_physical_1939} radius, we need to be able to extract the
+cloud edge radius from from the simulation data. there are several ways to do
+this, but here we choose to use the minimum of the derivative of the \hii
+fraction (see Figure \ref{fig:derivative} for a pictorial version), as this
+should be the turning point of the \hii curve. This will slightly
+under-predict the cloud radius, but only if the transition between the cloud
+and the rest of the ISM is not sharp. This turns out to be a reasonable
+assumption for nearly all of the data collected (see figures below).
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth, trim=0.5cm 0.5cm 0.5cm 0.5cm]{differential.pdf}
+\caption{First derivatives of the H$\textsc{ii}$ abundance with
+respect to depth into cloud. The different lines correspond to different
+black body temperatures for the central star, at a fixed density of
+$n_H = 1\times 10^3$. It is clear from fig.~\ref{fig:density} that
+there is a turning point in the H$\textsc{ii}$ abundance at what
+appears to be the `edge' of the cloud. By using the minima of this
+derivative we can find the edge programmatically.}\label{fig:derivative}
+\end{figure}
 
 \begin{figure}
 \centering
@@ -116,21 +156,6 @@ He$\textsc{ii}$ regions changes with cloud
 density.}\label{fig:density}
 \end{figure}
 
-To determine the edge of the H$\textsc{ii}$ region, we use the
-derivative of the H$\textsc{ii}$ abundance (see
-fig.~\ref{fig:derivative} for a plot that helps describe the method).
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth, trim=0.5cm 0.5cm 0.5cm 0.5cm]{differential.pdf}
-\caption{First derivatives of the H$\textsc{ii}$ abundance with
-respect to depth into cloud. The different lines correspond to different
-black body temperatures for the central star, at a fixed density of
-$n_H = 1\times 10^3$. It is clear from fig.~\ref{fig:density} that
-there is a turning point in the H$\textsc{ii}$ abundance at what
-appears to be the `edge' of the cloud. By using the minima of this
-derivative we can find the edge programmatically.}\label{fig:derivative}
-\end{figure}
 
 \section{Discussion}
 
