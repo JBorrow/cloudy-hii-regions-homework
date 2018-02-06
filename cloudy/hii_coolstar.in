@@ -2,7 +2,7 @@ title dust free cool HII region model, Lexington 1995
 c
 c commands controlling continuum =========
 black body, T = replace-me-temp K
-q(h) 49
+q(h) replace-me-qh
 c add the CMB after hot star shape & luminosity specified
 CMB 
 c
