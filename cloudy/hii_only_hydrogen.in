@@ -9,7 +9,7 @@ c
 c commands for density & abundances =========
 hden = replace-me-dens
 c cannot set abundances to 0, just go very low
-abundances all 1e-10
+abundances all 1e-18
 element limit off 0
 c commands controlling geometry  =========
 radius = 19.477121
