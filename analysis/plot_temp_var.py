@@ -59,6 +59,7 @@ for filename, location in locations.items():
 
         if number % 2:
             make_plot(axes[ax], ovw, density, temperature)
+            axes[ax].set_title(f"$T = {int(temperature)}")
             ax += 1
 
         temps.append(temperature)
