@@ -57,7 +57,8 @@ for filename, location in locations.items():
     # Make the final 'special' plot.
     axes[5].loglog(nh, theory, label="Theory ($R_S$)", color="black", alpha=0.5)
     axes[5].loglog(nh, minima_H, label="H II", color="green")
-    axes[5].loglog(nh, minima_He, label="He II", color="red")
+    if filename == "density_mixed":
+        axes[5].loglog(nh, minima_He, label="He II", color="red")
 
     axes[3].legend()
     axes[5].legend()
